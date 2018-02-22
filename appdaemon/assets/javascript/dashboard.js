@@ -3,13 +3,13 @@ function ha_status(stream, dash, widgets)
 {
 
     var webSocket = new ReconnectingWebSocket(stream);
-            
-    webSocket.onopen = function (event) 
+
+    webSocket.onopen = function (event)
     {
         webSocket.send(dash);
     };
 
-    webSocket.onmessage = function (event) 
+    webSocket.onmessage = function (event)
     {
         var data = JSON.parse(event.data)
         if (data.event_type == "hadashboard")
@@ -61,13 +61,13 @@ function ha_status(stream, dash, widgets)
     webSocket.onclose = function (event)
     {
         //window.alert("Server closed connection")
-       // window.location.reload(false); 
+       // window.location.reload(false);
     };
 
     webSocket.onerror = function (event)
     {
         //window.alert("Error occured")
-        //window.location.reload(true);         
+        //window.location.reload(true);
     }
 }
 
