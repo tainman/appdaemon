@@ -417,7 +417,7 @@ class RunDash:
                 if getattr(ws, 'send_str', None):
                     await ws.send_str(data)
                 else:
-                    await ws.send(data)
+                    ws.send(data)
 
     def sockjs_handler(self, msg, session):
         if msg.tp == appdaemon.sockjs.MSG_OPEN:
