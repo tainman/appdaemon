@@ -11,6 +11,7 @@ import feedparser
 from aiohttp import web
 import ssl
 import bcrypt
+import socket
 
 import appdaemon.sockjs
 import appdaemon.dashboard as dashboard
@@ -411,9 +412,9 @@ class RunDash:
 
             if "dashboard" in self.app['websockets'][ws]:
                 self.log(
-                    "DEBUG",
-                    "Found dashboard type {}".format(self.app['websockets'][ws]["dashboard"]))
-                ws.send(data)
+                       "DEBUG",
+                       "Found dashboard type {}".format(self.app['websockets'][ws]["dashboard"]))
+                await ws.send_str(data)
 
     def sockjs_handler(self, msg, session):
         if msg.tp == appdaemon.sockjs.MSG_OPEN:
