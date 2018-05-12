@@ -11,8 +11,8 @@ import feedparser
 from aiohttp import web
 import ssl
 import bcrypt
-import socket
 
+import appdaemon.sockjs
 import appdaemon.dashboard as dashboard
 import appdaemon.utils as utils
 
@@ -146,7 +146,7 @@ class RunDash:
 
         # Setup WS handler
 
-        self.app = web.Application()
+        self.app = web.Application(loop=loop)
         self.app['websockets'] = {}
 
         self.loop = loop
@@ -406,6 +406,13 @@ class RunDash:
                        "Found dashboard type {}".format(self.app['websockets'][ws]["dashboard"]))
                 await ws.send_str(data)
 
+    def sockjs_handler(self, msg, session):
+        if msg.tp == appdaemon.sockjs.MSG_OPEN:
+            self.app['websockets'][session] = {}
+        elif msg.tp == appdaemon.sockjs.MSG_MESSAGE:
+            self.app['websockets'][session]["dashboard"] = msg.data
+        elif msg.tp == appdaemon.sockjs.MSG_CLOSED:
+            del self.app['websockets'][session]
 
     # Routes, Status and Templates
 
@@ -442,3 +449,9 @@ class RunDash:
         # Add static path for images
         self.app.router.add_static('/images', self.dashboard_obj.images_dir)
 
+        # SockJS
+        # from sockjs.session import SessionManager
+        # import random
+        # name = 'n' + str(random.randint(1000, 9999))
+        # manager = SessionManager(name, self.app, self.sockjs_handler, self.loop)
+        appdaemon.sockjs.add_endpoint(self.app, prefix='/sockjs', handler=self.sockjs_handler)
