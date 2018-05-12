@@ -59,5 +59,7 @@ docs/_build/
 target/
 .idea/
 
+compiled
+build
 appdaemon.py
 run_dev.sh
