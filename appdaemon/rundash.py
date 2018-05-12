@@ -404,10 +404,11 @@ class RunDash:
                 self.log(
                        "DEBUG",
                        "Found dashboard type {}".format(self.app['websockets'][ws]["dashboard"]))
-                if getattr(ws, 'send_str', None):
-                    await ws.send_str(data)
-                else:
-                    ws.send(data)
+                ws.send(data)
+                # if ws is appdaemon.sockjs.session.Session:
+                #     ws.send(data)
+                # else:
+                #     await ws.send_str(data)
 
     def sockjs_handler(self, msg, session):
         if msg.tp == appdaemon.sockjs.MSG_OPEN:
