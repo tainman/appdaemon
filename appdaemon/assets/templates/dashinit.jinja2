@@ -87,15 +87,7 @@ $(function(){ //DOM Ready
     }
 
     // Start listening for HA Events
-    if (location.protocol == 'https:')
-    {
-        wsprot = "wss:"
-    }
-    else
-    {
-        wsprot = "ws:"
-    }
-    var stream_url = wsprot + '//' + location.host + '/stream'
+    var stream_url = location.protocol + '//' + location.host + '/sockjs'
     ha_status(stream_url, "{{ title }}", widgets);
 
 });
