@@ -115,10 +115,20 @@ var WidgetBase = function(widget_id, url, skin, parameters, monitored_entities, 
                 value = (value / 1E3).toFixed(1) + "K"
             }
         }
+
+        html_decimals_r = /(\d*)(\.)(\d*)/;
+
         if ("use_comma" in self.parameters && self.parameters.use_comma == 1)
         {
             value = value.toString().replace(".", ",")
+            html_decimals_r = /(\d*)(\,)(\d*)/;
         }
+
+        if ("html_decimals" in self.parameters && self.parameters.html_decimals == 1)
+        {
+            value = value.replace(html_decimals_r,'<span class="whole">$1</span><span class="sep">$2</span><span class="fraction">$3</span>')
+        }
+
         return value
     };
 
