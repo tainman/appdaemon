@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 CONF=/conf
 CONF_SRC=/usr/src/app/conf
