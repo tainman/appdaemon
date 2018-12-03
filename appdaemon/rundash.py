@@ -11,7 +11,6 @@ import feedparser
 from aiohttp import web
 import ssl
 import bcrypt
-import socket
 
 import appdaemon.sockjs
 import appdaemon.dashboard as dashboard
