@@ -16,6 +16,9 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY . .
 
+# Install packages
+RUN apk add --no-cache py-curl
+
 # Install
 RUN pip3 install requests && pip3 install .
 
