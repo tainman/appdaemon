@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install packages
-RUN apk add --no-cache py-curl
+RUN apk add --no-cache curl-dev
 
 # Install
 RUN pip3 install requests && pip3 install .
